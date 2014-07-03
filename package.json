@@ -1,0 +1,14 @@
+{
+  "name": "react-minimap",
+  "main": "./lib/react-minimap",
+  "version": "0.0.0",
+  "description": "A rework of the Atom minimap as a React component",
+  "activationEvents": ["react-minimap:toggle"],
+  "repository": "https://github.com/abe33/atom-react-minimap",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  }
+}
