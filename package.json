@@ -10,5 +10,6 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "react-atom-fork": "0.10.x"
   }
 }
