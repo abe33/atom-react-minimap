@@ -14,15 +14,20 @@ describe "ReactMinimap", ->
     activationPromise = atom.packages.activatePackage('react-minimap')
 
   describe "when the react-minimap:toggle event is triggered", ->
-    it "attaches and then detaches the view", ->
-      expect(atom.workspaceView.find('.react-minimap')).not.toExist()
+    describe 'with an editor actually on screen', ->
+      beforeEach ->
+        waitsForPromise ->
+          atom.workspaceView.open 'sample.js'
 
-      # This is an activation event, triggering it will cause the package to be
-      # activated.
-      atom.workspaceView.trigger 'react-minimap:toggle'
+      it "attaches and then detaches the view", ->
+        expect(atom.workspaceView.find('.minimap')).not.toExist()
 
-      waitsForPromise ->
-        activationPromise
+        # This is an activation event, triggering it will cause the package to be
+        # activated.
+        atom.workspaceView.trigger 'minimap:toggle'
 
-      runs ->
-        
+        waitsForPromise ->
+          activationPromise
+
+        runs ->
+          expect(atom.workspaceView.find('.minimap').length).toEqual(1)
