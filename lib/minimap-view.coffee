@@ -1,6 +1,7 @@
 {View} = require 'atom'
 React = require 'react-atom-fork'
 MinimapComponent = require './minimap-component'
+{defaults} = require 'underscore-plus'
 
 module.exports =
 class MinimapView extends View
@@ -18,6 +19,8 @@ class MinimapView extends View
     @attached = true
     props = defaults({@editor, parentView: this}, @props)
     @component = React.renderComponent(MinimapComponent(props), @element)
+
+    console.log 'there'
 
     node = @component.getDOMNode()
 
