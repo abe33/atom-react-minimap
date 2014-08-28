@@ -17,7 +17,7 @@ describe "ReactMinimap", ->
     activationPromise = atom.packages.activatePackage('react-minimap')
 
   afterEach ->
-    atom.workspaceView.trigger 'minimap:toggle'
+    atom.workspaceView.trigger 'react-minimap:toggle'
 
   describe "when the react-minimap:toggle event is triggered", ->
     describe 'with an editor actually on screen', ->
@@ -28,7 +28,7 @@ describe "ReactMinimap", ->
       it "attaches and then detaches the view", ->
         expect(atom.workspaceView.find('.minimap')).not.toExist()
 
-        atom.workspaceView.trigger 'minimap:toggle'
+        atom.workspaceView.trigger 'react-minimap:toggle'
 
         waitsForPromise -> activationPromise
 
@@ -38,7 +38,7 @@ describe "ReactMinimap", ->
       it 'decorates the pane with a with-react-minimap class', ->
         expect(atom.workspaceView.find('.with-react-minimap').length).toEqual(0)
 
-        atom.workspaceView.trigger 'minimap:toggle'
+        atom.workspaceView.trigger 'react-minimap:toggle'
 
         waitsForPromise -> activationPromise
 

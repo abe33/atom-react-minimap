@@ -3,6 +3,7 @@ semver = require 'semver'
 
 ViewManagement = require './mixins/view-management'
 
+
 class ReactMinimap
   Emitter.includeInto(this)
   ViewManagement.includeInto(this)
@@ -17,13 +18,19 @@ class ReactMinimap
   active: false
 
   activate: ->
+    css = ''
+    for k,v of document.styleSheets
+      css += v.ownerNode.innerHTML if v.ownerNode?
 
-    atom.workspaceView.command 'minimap:toggle', => @toggle()
-    @toggle() if atom.config.get 'minimap.autoToggle'
+    console.log css
 
-    atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
-    atom.config.observe 'minimap.displayMinimapOnLeft', =>
-      atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
+
+    atom.workspaceView.command 'react-minimap:toggle', => @toggle()
+    @toggle() if atom.config.get 'react-minimap.autoToggle'
+
+    atom.workspaceView.toggleClass 'react-minimap-on-left', atom.config.get('react-minimap.displayMinimapOnLeft')
+    atom.config.observe 'react-minimap.displayMinimapOnLeft', =>
+      atom.workspaceView.toggleClass 'react-minimap-on-left', atom.config.get('react-minimap.displayMinimapOnLeft')
 
   deactivate: ->
     @destroyViews()
