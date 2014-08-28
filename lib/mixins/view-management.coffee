@@ -1,31 +1,16 @@
 Mixin = require 'mixto'
 MinimapView = require '../minimap-view'
 
-# Public: Provides methods to manage minimap views per pane.
 module.exports =
 class ViewManagement extends Mixin
-  # Internal: Stores each MinimapView using the id of their PaneView
   minimapViews: {}
 
-  # Public: Updates all views currently in use.
   updateAllViews: ->
     view.onScrollViewResized() for id,view of @minimapViews
 
-  # Public: Returns the {MinimapView} object associated to the
-  # passed-in {EditorView}.
-  #
-  # editorView - An {EditorView} instance
-  #
-  # Returns the {MinimapView} object associated to the passed-in {EditorView}.
   minimapForEditorView: (editorView) ->
     @minimapForEditor(editorView?.getEditor())
 
-  # Public: Returns the {MinimapView} object associated to the
-  # passed-in {Editor}.
-  #
-  # editorView - An {Editor} instance
-  #
-  # Returns the {MinimapView} object associated to the passed-in {Editor}.
   minimapForEditor: (editor) ->
     @minimapViews[editor.id] if editor?
 
