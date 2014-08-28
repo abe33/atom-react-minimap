@@ -18,12 +18,6 @@ class ReactMinimap
   active: false
 
   activate: ->
-    css = ''
-    for k,v of document.styleSheets
-      css += v.ownerNode.innerHTML if v.ownerNode?
-
-    console.log css
-
 
     atom.workspaceView.command 'react-minimap:toggle', => @toggle()
     @toggle() if atom.config.get 'react-minimap.autoToggle'
