@@ -5,14 +5,12 @@ module.exports =
 class ViewManagement extends Mixin
   minimapViews: {}
 
-  updateAllViews: ->
-    view.onScrollViewResized() for id,view of @minimapViews
+  updateAllViews: -> view.onScrollViewResized() for id,view of @minimapViews
 
   minimapForEditorView: (editorView) ->
     @minimapForEditor(editorView?.getEditor())
 
-  minimapForEditor: (editor) ->
-    @minimapViews[editor.id] if editor?
+  minimapForEditor: (editor) -> @minimapViews[editor.id] if editor?
 
   # Public: Calls `iterator` for each present and future minimap views.
   #
@@ -26,6 +24,7 @@ class ViewManagement extends Mixin
     return unless iterator?
     iterator({view: minimapView}) for id,minimapView of @minimapViews
     createdCallback = (minimapView) -> iterator(minimapView)
+
     @on('minimap-view:created', createdCallback)
     off: => @off('minimap-view:created', createdCallback)
 
@@ -43,7 +42,6 @@ class ViewManagement extends Mixin
     # store it and it will be used in the `deactivate` method to removes
     # the callback.
     @eachEditorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
-      console.log 'here'
       editorId = editorView.editor.id
       paneView = editorView.getPane()
       view = new MinimapView(editorView)
@@ -65,4 +63,4 @@ class ViewManagement extends Mixin
           @emit('minimap-view:destroyed', {view})
 
           if paneView.activeView.hasClass('editor')
-            paneView.addClass('with-minimap')
+            paneView.addClass('with-react-minimap')

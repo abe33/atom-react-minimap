@@ -7,11 +7,17 @@ ReactMinimap = require '../lib/react-minimap'
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe "ReactMinimap", ->
-  activationPromise = null
+  [activationPromise] = []
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
+    atom.config.set 'editor.lineHeight', '1.5'
+    atom.config.set 'editor.fontSize', '10'
+
     activationPromise = atom.packages.activatePackage('react-minimap')
+
+  afterEach ->
+    atom.workspaceView.trigger 'minimap:toggle'
 
   describe "when the react-minimap:toggle event is triggered", ->
     describe 'with an editor actually on screen', ->
@@ -22,12 +28,19 @@ describe "ReactMinimap", ->
       it "attaches and then detaches the view", ->
         expect(atom.workspaceView.find('.minimap')).not.toExist()
 
-        # This is an activation event, triggering it will cause the package to be
-        # activated.
         atom.workspaceView.trigger 'minimap:toggle'
 
-        waitsForPromise ->
-          activationPromise
+        waitsForPromise -> activationPromise
 
         runs ->
-          expect(atom.workspaceView.find('.minimap').length).toEqual(1)
+          expect(atom.workspaceView.find('.react-minimap').length).toEqual(1)
+
+      it 'decorates the pane with a with-react-minimap class', ->
+        expect(atom.workspaceView.find('.with-react-minimap').length).toEqual(0)
+
+        atom.workspaceView.trigger 'minimap:toggle'
+
+        waitsForPromise -> activationPromise
+
+        runs ->
+          expect(atom.workspaceView.find('.with-react-minimap').length).toEqual(1)

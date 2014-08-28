@@ -4,4 +4,4 @@ React = require 'react-atom-fork'
 
 module.exports = React.createClass
   render: ->
-    div className: 'foo'
+    div className: 'react-minimap-wrapper'

@@ -5,7 +5,7 @@ MinimapComponent = require './minimap-component'
 
 module.exports =
 class MinimapView extends View
-  @content: -> @div class: 'minimap'
+  @content: -> @div class: 'react-minimap'
 
   constructor: (@editorView, @props) ->
     super
@@ -20,16 +20,15 @@ class MinimapView extends View
     props = defaults({@editor, parentView: this}, @props)
     @component = React.renderComponent(MinimapComponent(props), @element)
 
-    console.log 'there'
-
     node = @component.getDOMNode()
 
   destroy: ->
 
   attach: ->
-    @paneView.addClass('with-minimap')
+    @paneView.addClass('with-react-minimap')
     @paneView.append(this)
+    @afterAttach(true)
 
   detach: ->
-    @paneView.removeClass('with-minimap')
+    @paneView.removeClass('with-react-minimap')
     super
